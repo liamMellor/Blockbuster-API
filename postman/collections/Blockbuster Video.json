@@ -1,0 +1,244 @@
+{
+	"info": {
+		"_postman_id": "b8b1eb0d-d5ab-49f6-8e17-89593665c21a",
+		"name": "Blockbuster Video",
+		"description": "We can see the videos in stock as well as rent them out\n\nContact Support:\n Name: Liam\n Email: liam@example.com",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "23840032-b8b1eb0d-d5ab-49f6-8e17-89593665c21a"
+	},
+	"item": [
+		{
+			"name": "Fetch the videos someone can rent",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9aba1b70-a984-41fe-8d5b-7ce2e5baae75",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "c065911d-89b8-40af-b58b-534f6c0e3bf6",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/videos",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"videos"
+					]
+				},
+				"description": "Retrieve the videos from the inventory database"
+			},
+			"response": [
+				{
+					"id": "435069b0-e631-491a-bfbc-416ba92ec3d8",
+					"name": "Videos are found, and returned",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/videos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"videos"
+							]
+						},
+						"description": "Retrieve the videos from the inventory database"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"videos\": [\n    {\n      \"videoName\": \"Die Hard\",\n      \"count\": 10\n    },\n    {\n      \"videoName\": \"Austin Powers\",\n      \"count\": 5\n    }\n  ],\n  \"formats\": [\n    {\n      \"format\": \"VHS\",\n      \"count\": 3\n    },\n    {\n      \"format\": \"DVD\",\n      \"count\": 2000\n    },\n    {\n      \"format\": \"BluRay\",\n      \"count\": 10\n    }\n  ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Create New Rental",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "acb7d547-8a29-4068-b0d5-b0c8713f8603",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "77e33dbd-2a3a-4787-ba96-54acdd278915",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"videos\": [\n    {\n      \"videoName\": \"Die Hard\",\n      \"count\": 1\n    },\n    {\n      \"videoName\": \"Austin Powers\",\n      \"count\": 1\n    }\n  ],\n  \"formats\": [\n    {\n      \"format\": \"VHS\",\n      \"count\": 1\n    },\n    {\n      \"format\": \"DVD\",\n      \"count\": 2\n    },\n    {\n      \"format\": \"BluRay\",\n      \"count\": 1\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/order",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"order"
+					]
+				},
+				"description": "User will send a structure of data to place an online rental"
+			},
+			"response": [
+				{
+					"id": "039a27cc-a6d8-4a9a-b661-3b46cd5b6c85",
+					"name": "Rental created, thank you!",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"videos\": [\n    {\n      \"videoName\": \"Die Hard\",\n      \"count\": 1\n    },\n    {\n      \"videoName\": \"Austin Powers\",\n      \"count\": 1\n    }\n  ],\n  \"formats\": [\n    {\n      \"format\": \"VHS\",\n      \"count\": 1\n    },\n    {\n      \"format\": \"DVD\",\n      \"count\": 2\n    },\n    {\n      \"format\": \"BluRay\",\n      \"count\": 1\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/order",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"order"
+							]
+						},
+						"description": "User will send a structure of data to place an online rental"
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"videos\": [\n    {\n      \"videoName\": \"Die Hard\",\n      \"count\": 1\n    },\n    {\n      \"videoName\": \"Austin Powers\",\n      \"count\": 1\n    }\n  ],\n  \"formats\": [\n    {\n      \"format\": \"VHS\",\n      \"count\": 1\n    },\n    {\n      \"format\": \"DVD\",\n      \"count\": 0\n    },\n    {\n      \"format\": \"BluRay\",\n      \"count\": 0\n    }\n  ]\n}"
+				},
+				{
+					"id": "a64b377f-df90-4d6e-88bd-1e523fa6c4de",
+					"name": "Missing Required Information, or format requested was not available",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"videos\": [\n    {\n      \"videoName\": \"Die Hard\",\n      \"count\": 1\n    },\n    {\n      \"videoName\": \"Austin Powers\",\n      \"count\": 1\n    }\n  ],\n  \"formats\": [\n    {\n      \"format\": \"VHS\",\n      \"count\": 1\n    },\n    {\n      \"format\": \"DVD\",\n      \"count\": 2\n    },\n    {\n      \"format\": \"BluRay\",\n      \"count\": 1\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/order",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"order"
+							]
+						},
+						"description": "User will send a structure of data to place an online rental"
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"message\": \"Could not create your rental\",\n  \"details\": \"Sorry, one or more videos in your rental are not available\"\n}"
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"id": "e76cc173-36f6-4c4b-a013-135081fe70b4",
+			"key": "baseUrl",
+			"value": "http://localhost:3000",
+			"type": "string"
+		}
+	]
+}
