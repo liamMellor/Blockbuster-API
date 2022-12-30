@@ -99,10 +99,10 @@ paths:
                   videos:
                     DieHard: 1
                     AustinPowers: 1
-                  toppings:
-                    HotFudge: 1
-                    Sprinkles: 2
-                    Whipped Cream: 1
+                  formats:
+                    VHS: 1
+                    DVD: 2
+                    BluRay: 1
               properties:
                 videos:
                   type: array
