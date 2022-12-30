@@ -1,0 +1,186 @@
+openapi: 3.1.0
+info:
+  title: Blockbuster Video
+  version: '1.0'
+  summary: A Blockbuster video store API for renting movies.
+  description: 'We can see the videos in stock as well as rent them out'
+  contact:
+    name: Liam
+    url: 'http://localhost:3000'
+    email: liam@example.com
+  termsOfService: 'http://localhost:3000/terms-of-service'
+  license:
+    name: Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)
+    url: 'https://creativecommons.org/licenses/by-nc/4.0/'
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /videos:
+    parameters: []
+    get:
+      summary: Fetch the videos someone can rent
+      responses:
+        '200':
+          description: 'Videos are found, and returned'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VideoInventory'
+              examples:
+                Get the videos:
+                  value:
+                    videos:
+                      - videoName: Die Hard
+                        count: 10
+                      - videoName: Austin Powers
+                        count: 5
+                    formats:
+                      - format: VHS
+                        count: 3
+                      - format: DVD
+                        count: 2000
+                      - format: BluRay
+                        count: 10
+            application/javascript:
+              schema:
+                type: object
+                properties: {}
+      operationId: get-videos
+      description: Retrieve the videos from the inventory database
+  /order:
+    post:
+      summary: Create New Rental
+      operationId: post-rental
+      responses:
+        '201':
+          description: 'Rental created, thank you!'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VideoInventory'
+              examples:
+                New Order Success:
+                  value:
+                    flavors:
+                      - videoName: Die Hard
+                        count: 1
+                      - videoName: Austin Powers
+                        count: 1
+                    formats:
+                      - format: VHS
+                        count: 1
+                      - format: DVD
+                        count: 0
+                      - format: BluRay
+                        count: 0
+        '400':
+          description: 'Missing Required Information, or format requested was not available'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  details:
+                    type: string
+              examples:
+                Item out of stock:
+                  value:
+                    message: Could not create your rental
+                    details: 'Sorry, one or more videos in your rental are not available'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              x-examples:
+                example-1:
+                  videos:
+                    DieHard: 1
+                    AustinPowers: 1
+                  toppings:
+                    HotFudge: 1
+                    Sprinkles: 2
+                    Whipped Cream: 1
+              properties:
+                videos:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      videoName:
+                        type: string
+                      count:
+                        type: integer
+                formats:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      format:
+                        type: string
+                      count:
+                        type: integer
+            examples:
+              Create a rental:
+                value:
+                  videos:
+                    - videoName: Die Hard
+                      count: 1
+                    - videoName: Austin Powers
+                      count: 1
+                  formats:
+                    - format: VHS
+                      count: 1
+                    - format: DVD
+                      count: 2
+                    - foprmat: BluRay
+                      count: 1
+        description: Post the necessary fields for the API to create a new rental.
+      description: User will send a structure of data to place an online rental
+    parameters: []
+components:
+  schemas:
+    VideoInventory:
+      type: object
+      x-examples:
+        example-1:
+          videos:
+            - videoName: Die Hard
+              count: 100
+            - videoName: Austin Powers
+              count: 100
+          formats:
+            - format: VHS
+              count: 50
+            - format: DVD
+              count: 2000
+
+      title: InventoryOrder
+      description: 'Structure of rentals data passed to the user to show existing inventory, and also passed by the user when placing an order'
+      properties:
+        videos:
+          type: array
+          items:
+            type: object
+            properties:
+              videoName:
+                type: string
+              count:
+                type: integer
+        formats:
+          type: array
+          items:
+            type: object
+            properties:
+              format:
+                type: string
+              count:
+                type: integer
+  securitySchemes:
+    x-api-key:
+      name: abc123
+      type: apiKey
+      in: header
+security: []
