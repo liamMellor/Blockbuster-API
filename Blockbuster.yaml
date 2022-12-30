@@ -61,7 +61,7 @@ paths:
               examples:
                 New Order Success:
                   value:
-                    flavors:
+                    videos:
                       - videoName: Die Hard
                         count: 1
                       - videoName: Austin Powers
@@ -135,7 +135,7 @@ paths:
                       count: 1
                     - format: DVD
                       count: 2
-                    - foprmat: BluRay
+                    - format: BluRay
                       count: 1
         description: Post the necessary fields for the API to create a new rental.
       description: User will send a structure of data to place an online rental
